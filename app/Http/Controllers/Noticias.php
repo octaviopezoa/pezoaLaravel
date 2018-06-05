@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Noticia;
 
+use Storage;
+
 class Noticias extends Controller
 {
     /**
@@ -38,7 +40,27 @@ class Noticias extends Controller
     {
         //
 
-        dd($request->contenido);
+        //dd($request->contenido);
+        $this->validate($request,[
+            'titulo' => 'required',
+            'contenido' =>'required'
+        ]);
+
+        $noticia = new Noticia();
+
+        $noticia->titulo = $request->titulo;
+        $noticia->contenido = $request->contenido;
+
+        $img = $request->file('rutaImagen');
+        $file_route = time().'_'.$img->getClientOriginalName();
+
+        Storage::disk('imagenes')->put($file_route, file_get_contents($img->getRealPath()));
+
+        $noticia->rutaImagen = $file_route;
+
+        $noticia->save();
+        
+        return back();
         
     }
 
