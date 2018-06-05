@@ -58,9 +58,14 @@ class Noticias extends Controller
 
         $noticia->rutaImagen = $file_route;
 
-        $noticia->save();
+        if ($noticia->save()) {
+            return back()->with('exito','Datos guardados');
+        } else {
+            return back()->with('fracaso','Error al guardar, pruebe nuevamente.');;
+        }
         
-        return back();
+        
+        
         
     }
 
