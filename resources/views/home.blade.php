@@ -16,6 +16,7 @@
 
                     <!-- Formulario para el blog-->
                     @include('layouts.form')
+                    @include('layouts.datos')
 
                 </div>
             </div>
